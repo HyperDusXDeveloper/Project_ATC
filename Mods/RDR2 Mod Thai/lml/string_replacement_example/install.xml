@@ -1,0 +1,16 @@
+<EasyInstall>
+    <Name>Replace game strings</Name>
+    <Author>LMS</Author>
+    <Version>1.0.0</Version>
+    <Link></Link>
+    <Metadata>
+    </Metadata>
+
+    <Resources>
+        <Resource>
+            <!-- As usual, file can have any name. LML picks up the extension automatically and treats it as a language file. Please note that this uses the GTA V extension, but
+            since it is loaded as a raw text file it does not matter. -->
+            <DataFile>strings.gxt2</DataFile>
+        </Resource>
+    </Resources>
+</EasyInstall>
