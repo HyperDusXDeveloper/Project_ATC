@@ -48,3 +48,15 @@ plt.ylabel('Price')
 plt.legend()
 plt.grid()
 plt.show()
+
+# pip install function
+
+# import yfinance as yf
+# import matplotlib.pyplot as plt
+# import ta 
+# import pandas as pd
+# import numpy as np
+# import yfinance
+# import matplotlib.pyplot as plt
+# import alpha_vantage
+# import ccxt
