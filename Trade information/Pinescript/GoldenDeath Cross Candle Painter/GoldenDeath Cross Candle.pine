@@ -1,0 +1,49 @@
+describe_indicator('Golden/Death Cross Candle Painter');
+
+// Input for SMA periods
+const fastPeriod = input.number('Fast SMA Period', 50, { min: 1 });
+const slowPeriod = input.number('Slow SMA Period', 200, { min: 1 });
+
+// Calculate SMAs
+const fastSMA = sma(close, fastPeriod);
+const slowSMA = sma(close, slowPeriod);
+
+// Initialize arrays for storing cross conditions
+const goldenCross = series_of(false);
+const deathCross = series_of(false);
+
+// Function to check if a cross occurred
+const crossOccurred = (fast, slow, index) => {
+    if (index < 1) return false;
+    return (fast[index] > slow[index] && fast[index - 1] <= slow[index - 1]) ||
+           (fast[index] < slow[index] && fast[index - 1] >= slow[index - 1]);
+};
+
+// Determine cross conditions
+for (let i = 1; i < close.length; i++) {
+    if (crossOccurred(fastSMA, slowSMA, i)) {
+        goldenCross[i] = fastSMA[i] > slowSMA[i];
+        deathCross[i] = fastSMA[i] < slowSMA[i];
+    } else {
+        goldenCross[i] = goldenCross[i - 1];
+        deathCross[i] = deathCross[i - 1];
+    }
+}
+
+// Define candle colors
+const candleColors = for_every(close, fastSMA, slowSMA, goldenCross, deathCross, 
+    (_close, _fastSMA, _slowSMA, _goldenCross, _deathCross) => {
+        if (_goldenCross && _close > _fastSMA && _close > _slowSMA) {
+            return 'gold';
+        } else if (_deathCross && _close < _fastSMA && _close < _slowSMA) {
+            return 'red';
+        }
+        return 'grey';  // Paint candles grey if neither condition is met
+    });
+
+// Paint the candles
+color_candles(candleColors);
+
+// Paint SMAs for reference
+paint(fastSMA, { color: 'blue', name: `${fastPeriod} SMA` });
+paint(slowSMA, { color: 'purple', name: `${slowPeriod} SMA` });
