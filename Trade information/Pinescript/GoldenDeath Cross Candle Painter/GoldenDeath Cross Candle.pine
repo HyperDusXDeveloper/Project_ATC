@@ -47,3 +47,5 @@ color_candles(candleColors);
 // Paint SMAs for reference
 paint(fastSMA, { color: 'blue', name: `${fastPeriod} SMA` });
 paint(slowSMA, { color: 'purple', name: `${slowPeriod} SMA` });
+
+// https://charts.trendspider.com/shared/67880d0d4610d6000a2524e3?t=3
